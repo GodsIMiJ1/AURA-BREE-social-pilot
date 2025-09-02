@@ -6,6 +6,8 @@ import { ContentCalendar } from '@/components/dashboard/content-calendar';
 import { RoadmapProgress } from '@/components/dashboard/roadmap-progress';
 import { GoalAnalyzer } from '@/components/dashboard/goal-analyzer';
 import { MotivationTools } from '@/components/dashboard/motivation-tools';
+import { ChatGuide } from '@/components/dashboard/chat-guide';
+import { PostGenerator } from '@/components/dashboard/post-generator';
 
 export default function DashboardPage() {
   return (
@@ -21,8 +23,10 @@ export default function DashboardPage() {
             <PlatformMetricsCard platform="Discord" Icon={Bot} />
           </div>
           <GoalAnalyzer />
+          <PostGenerator />
         </div>
-        <div className="grid auto-rows-max items-start gap-8">
+        <div className="grid auto-rows-max items-start gap-8 lg:sticky lg:top-20">
+          <ChatGuide />
           <DailyTasks />
           <RoadmapProgress />
           <MotivationTools />
