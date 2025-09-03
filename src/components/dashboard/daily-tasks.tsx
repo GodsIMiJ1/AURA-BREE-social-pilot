@@ -4,26 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { dailyTasks } from "./data";
 
-const morningTasks = [
-  "Check LinkedIn mentions and messages",
-  "Respond to comments on yesterday's posts",
-  "Schedule today's main LinkedIn post",
-  "Check Twitter notifications",
-  "Post daily insight on Twitter",
-];
-
-const middayTasks = [
-  "Engage with 10 accounts on Instagram",
-  "Post a Facebook story",
-  "Check Discord community for questions",
-];
-
-const eveningTasks = [
-  "Review daily metrics",
-  "Plan tomorrow's content",
-  "Engage with LinkedIn comments",
-];
+const { morning: morningTasks, midday: middayTasks, evening: eveningTasks } = dailyTasks;
 
 const TaskItem = ({ task }: { task: string }) => (
   <div className="flex items-center space-x-3 py-2">

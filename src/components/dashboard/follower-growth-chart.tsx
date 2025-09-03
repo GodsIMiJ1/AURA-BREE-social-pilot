@@ -14,17 +14,11 @@ import {
 } from "@/components/ui/card"
 import {
   ChartContainer,
-  ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+import { followerGrowthData } from "./data"
 
-const chartData = [
-  { week: "Week 1", linkedin: 50, twitter: 80, facebook: 30, instagram: 60, discord: 20 },
-  { week: "Week 2", linkedin: 150, twitter: 200, facebook: 80, instagram: 120, discord: 50 },
-  { week: "Week 3", linkedin: 275, twitter: 350, facebook: 150, instagram: 240, discord: 100 },
-  { week: "Week 4", linkedin: 450, twitter: 550, facebook: 250, instagram: 400, discord: 150 },
-  { week: "Week 5", linkedin: 600, twitter: 750, facebook: 350, instagram: 580, discord: 200 },
-]
+const chartData = followerGrowthData;
 
 const chartConfig = {
   followers: {

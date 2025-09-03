@@ -32,11 +32,11 @@ export function ChatGuide() {
       if (storedMessages) {
         setMessages(JSON.parse(storedMessages));
       } else {
-         setMessages([{ role: 'model', content: "Greetings, Your Majesty. I am Lyra, your spectral guide. How may I assist your reign today?" }]);
+         setMessages([{ role: 'model', content: "Greetings, Your Majesty. I am Lyra, your spectral guide. How may I assist your reign today? I can now see your dashboard data." }]);
       }
     } catch (error) {
       console.error("Failed to load messages from local storage", error);
-       setMessages([{ role: 'model', content: "Greetings, Your Majesty. I am Lyra, your spectral guide. How may I assist your reign today?" }]);
+       setMessages([{ role: 'model', content: "Greetings, Your Majesty. I am Lyra, your spectral guide. How may I assist your reign today? I can now see your dashboard data." }]);
     }
   }, []);
 
@@ -90,7 +90,7 @@ export function ChatGuide() {
           <Ghost />
           Spectral Guide
         </CardTitle>
-        <CardDescription>Your loyal advisor, Lyra.</CardDescription>
+        <CardDescription>Your omniscient advisor, Lyra.</CardDescription>
       </CardHeader>
       <CardContent className="flex-grow flex flex-col gap-4">
         <ScrollArea className="flex-grow pr-4" ref={scrollAreaRef}>
@@ -133,7 +133,7 @@ export function ChatGuide() {
             className="flex-grow"
           />
           <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
-            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+            {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
           </Button>
         </form>
       </CardContent>
