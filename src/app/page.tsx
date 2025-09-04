@@ -8,6 +8,7 @@ import { MotivationTools } from '@/components/dashboard/motivation-tools';
 import { ChatGuide } from '@/components/dashboard/chat-guide';
 import { PostGenerator } from '@/components/dashboard/post-generator';
 import { FollowerGrowthChart } from '@/components/dashboard/follower-growth-chart';
+import { PlatformAnalytics } from '@/components/dashboard/platform-analytics';
 
 export default function DashboardPage() {
   return (
@@ -22,6 +23,7 @@ export default function DashboardPage() {
             <PlatformMetricsCard platform="Instagram" iconName="Instagram" />
             <PlatformMetricsCard platform="Discord" iconName="Bot" />
           </div>
+          <PlatformAnalytics />
           <FollowerGrowthChart />
           <GoalAnalyzer />
           <PostGenerator />
