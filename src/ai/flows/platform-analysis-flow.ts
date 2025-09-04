@@ -106,6 +106,7 @@ const platformAnalysisPrompt = ai.definePrompt({
     
     Your analysis must be sharp, insightful, and directly tied to the provided data.
     Be encouraging but direct. The Ghost King values actionable intelligence, not flattery.
+    Your analysis date should be the current date.
 
     ANALYSIS SCOPE:
     - Performance trends and patterns: Analyze follower growth, engagement rates, and post performance.

@@ -29,7 +29,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2, Wand2, BarChart, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Loader2, Wand2, BarChart, AlertTriangle, CheckCircle, Plus, Trash2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
 
@@ -40,14 +40,14 @@ const formSchema = z.object({
   campaignGoals: z.object({
     followerTarget: z.coerce.number().min(0),
     engagementTarget: z.coerce.number().min(0),
-    contentGoals: z.array(z.object({ value: z.string() })).optional(),
+    contentGoals: z.array(z.object({ value: z.string().min(1, 'Goal cannot be empty') })),
   }),
-  challenges: z.array(z.object({ value: z.string() })).optional(),
-  observations: z.array(z.object({ value: z.string() })).optional(),
+  challenges: z.array(z.object({ value: z.string().min(1, 'Challenge cannot be empty') })),
+  observations: z.array(z.object({ value: z.string().min(1, 'Observation cannot be empty') })),
 });
 
-const initialData: Omit<PlatformAnalysisInput, 'platform'> = {
-    dateRange: { startDate: new Date().toISOString().split('T')[0], endDate: new Date().toISOString().split('T')[0] },
+const initialData: Omit<PlatformAnalysisInput, 'platform' | 'campaignGoals' | 'challenges' | 'observations'> = {
+    dateRange: { startDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], endDate: new Date().toISOString().split('T')[0] },
     metrics: {
       followers: [100, 150, 220, 300],
       engagementRate: [2.5, 3.1, 2.8, 3.5],
@@ -58,13 +58,6 @@ const initialData: Omit<PlatformAnalysisInput, 'platform'> = {
       bestPostingTimes: ['8 AM EST', '1 PM EST'],
       hashtagPerformance: [{ hashtag: '#HealthcareAI', engagement: 15.2 }, { hashtag: '#DigitalHealth', engagement: 12.1 }],
     },
-    campaignGoals: {
-      followerTarget: 1000,
-      engagementTarget: 5,
-      contentGoals: ['Establish thought leadership', 'Drive demo requests'],
-    },
-    challenges: ['Low engagement on technical posts', 'Building initial audience'],
-    observations: ['Case studies perform best', 'Questions in posts drive comments'],
   };
 
 
@@ -78,11 +71,15 @@ export function PlatformAnalytics() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       platform: 'linkedin',
-      campaignGoals: { followerTarget: 1000, engagementTarget: 5 },
+      campaignGoals: { followerTarget: 1000, engagementTarget: 5, contentGoals: [{value: 'Establish thought leadership'}, {value: 'Drive demo requests'}] },
       challenges: [{ value: 'Low engagement on technical posts' }],
       observations: [{ value: 'Case studies perform best' }],
     },
   });
+
+  const { fields: goalFields, append: appendGoal, remove: removeGoal } = useFieldArray({ control: form.control, name: "campaignGoals.contentGoals" });
+  const { fields: challengeFields, append: appendChallenge, remove: removeChallenge } = useFieldArray({ control: form.control, name: "challenges" });
+  const { fields: observationFields, append: appendObservation, remove: removeObservation } = useFieldArray({ control: form.control, name: "observations" });
 
   async function handleLyraAnalysis() {
     setIsAnalyzing(true);
@@ -90,16 +87,16 @@ export function PlatformAnalytics() {
     try {
         const values = form.getValues();
         const analysisInput: PlatformAnalysisInput = {
-            ...initialData, // Using sample data for now as per design
+            ...initialData,
             platform: values.platform,
             campaignGoals: {
-              ...initialData.campaignGoals,
+              ...initialData.campaignGoals, // This is just for the schema, will be overwritten
               followerTarget: values.campaignGoals.followerTarget,
               engagementTarget: values.campaignGoals.engagementTarget,
-              contentGoals: values.campaignGoals.contentGoals?.map(g => g.value) ?? [],
+              contentGoals: values.campaignGoals.contentGoals.map(g => g.value),
             },
-            challenges: values.challenges?.map(c => c.value) ?? [],
-            observations: values.observations?.map(o => o.value) ?? [],
+            challenges: values.challenges.map(c => c.value),
+            observations: values.observations.map(o => o.value),
         };
         const result = await analyzePlatform(analysisInput);
         setLyraReport(result);
@@ -119,7 +116,7 @@ export function PlatformAnalytics() {
     <ul className="space-y-3">
         {items.map((item, index) => (
             <li key={index} className="flex items-start gap-3 p-3 rounded-md bg-secondary/50">
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 mt-1">
                     {item.priority === 'high' && <AlertTriangle className="h-5 w-5 text-destructive" />}
                     {item.priority === 'medium' && <Wand2 className="h-5 w-5 text-yellow-500" />}
                     {item.priority === 'low' && <CheckCircle className="h-5 w-5 text-green-500" />}
@@ -128,8 +125,8 @@ export function PlatformAnalytics() {
                     <p className="font-semibold">{item.action}</p>
                     <p className="text-sm text-muted-foreground">{item.expectedImpact}</p>
                     <details className="mt-2 text-xs">
-                        <summary className="cursor-pointer">Implementation Steps</summary>
-                        <ul className="list-disc pl-5 mt-1 space-y-1">
+                        <summary className="cursor-pointer font-medium">Implementation Steps</summary>
+                        <ul className="list-disc pl-5 mt-1 space-y-1 text-muted-foreground">
                             {item.implementationSteps.map((step, i) => <li key={i}>{step}</li>)}
                         </ul>
                     </details>
@@ -156,6 +153,7 @@ export function PlatformAnalytics() {
           onValueChange={(value) => {
             setSelectedPlatform(value as Platform);
             form.setValue('platform', value as Platform);
+            setLyraReport(null);
           }}
           className="w-full"
         >
@@ -168,74 +166,115 @@ export function PlatformAnalytics() {
           </TabsList>
           <TabsContent value={selectedPlatform} className="mt-6">
             <Form {...form}>
-              <form onSubmit={(e) => { e.preventDefault(); handleLyraAnalysis(); }} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                    <Card className="p-4">
-                        <CardHeader className="p-2">
-                            <CardTitle className="text-lg">Campaign Goals</CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-2">
-                            <FormField
-                                control={form.control}
-                                name="campaignGoals.followerTarget"
-                                render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Follower Target</FormLabel>
-                                    <FormControl>
-                                    <Input type="number" placeholder="e.g., 5000" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                                )}
-                            />
-                             <FormField
-                                control={form.control}
-                                name="campaignGoals.engagementTarget"
-                                render={({ field }) => (
-                                <FormItem className="mt-4">
-                                    <FormLabel>Engagement Target (%)</FormLabel>
-                                    <FormControl>
-                                    <Input type="number" placeholder="e.g., 8" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                                )}
-                            />
-                        </CardContent>
-                    </Card>
-                     <Card className="p-4">
-                        <CardHeader className="p-2">
-                            <CardTitle className="text-lg">Qualitative Data</CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-2">
-                             <FormField
-                                control={form.control}
-                                name="observations.0.value"
-                                render={({ field }) => (
-                                <FormItem>
+              <form onSubmit={form.handleSubmit(handleLyraAnalysis)} className="space-y-6">
+                <div className="grid lg:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                        <Card className="p-4">
+                            <CardHeader className="p-2">
+                                <CardTitle className="text-lg">Campaign Goals</CardTitle>
+                            </CardHeader>
+                            <CardContent className="p-2 space-y-4">
+                                <FormField
+                                    control={form.control}
+                                    name="campaignGoals.followerTarget"
+                                    render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Follower Target</FormLabel>
+                                        <FormControl>
+                                        <Input type="number" placeholder="e.g., 5000" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                    )}
+                                />
+                                 <FormField
+                                    control={form.control}
+                                    name="campaignGoals.engagementTarget"
+                                    render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Engagement Target (%)</FormLabel>
+                                        <FormControl>
+                                        <Input type="number" placeholder="e.g., 8" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                    )}
+                                />
+                                 <div>
+                                    <FormLabel>Content Goals</FormLabel>
+                                    <div className="mt-2 space-y-2">
+                                        {goalFields.map((field, index) => (
+                                            <div key={field.id} className="flex items-center gap-2">
+                                                 <FormField
+                                                    control={form.control}
+                                                    name={`campaignGoals.contentGoals.${index}.value`}
+                                                    render={({ field }) => (
+                                                        <FormItem className="flex-grow">
+                                                            <FormControl><Input placeholder={`Goal #${index + 1}`} {...field} /></FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                                <Button type="button" variant="ghost" size="icon" onClick={() => removeGoal(index)}><Trash2 className="h-4 w-4" /></Button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <Button type="button" variant="outline" size="sm" className="mt-2" onClick={() => appendGoal({ value: "" })}><Plus className="mr-2 h-4 w-4" /> Add Goal</Button>
+                                 </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                     <div className="space-y-4">
+                        <Card className="p-4">
+                            <CardHeader className="p-2">
+                                <CardTitle className="text-lg">Qualitative Data</CardTitle>
+                            </CardHeader>
+                            <CardContent className="p-2 space-y-4">
+                                <div>
                                     <FormLabel>Key Observations</FormLabel>
-                                    <FormControl>
-                                    <Textarea placeholder="What have you noticed on this platform?" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="challenges.0.value"
-                                render={({ field }) => (
-                                <FormItem className="mt-4">
+                                     <div className="mt-2 space-y-2">
+                                        {observationFields.map((field, index) => (
+                                            <div key={field.id} className="flex items-center gap-2">
+                                                 <FormField
+                                                    control={form.control}
+                                                    name={`observations.${index}.value`}
+                                                    render={({ field }) => (
+                                                        <FormItem className="flex-grow">
+                                                            <FormControl><Textarea placeholder={`Observation #${index + 1}`} {...field} /></FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                                <Button type="button" variant="ghost" size="icon" onClick={() => removeObservation(index)}><Trash2 className="h-4 w-4" /></Button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <Button type="button" variant="outline" size="sm" className="mt-2" onClick={() => appendObservation({ value: "" })}><Plus className="mr-2 h-4 w-4" /> Add Observation</Button>
+                                </div>
+                                <div>
                                     <FormLabel>Main Challenges</FormLabel>
-                                    <FormControl>
-                                    <Textarea placeholder="What were your biggest hurdles?" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                                )}
-                            />
-                        </CardContent>
-                    </Card>
+                                     <div className="mt-2 space-y-2">
+                                        {challengeFields.map((field, index) => (
+                                            <div key={field.id} className="flex items-center gap-2">
+                                                 <FormField
+                                                    control={form.control}
+                                                    name={`challenges.${index}.value`}
+                                                    render={({ field }) => (
+                                                        <FormItem className="flex-grow">
+                                                            <FormControl><Textarea placeholder={`Challenge #${index + 1}`} {...field} /></FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                                <Button type="button" variant="ghost" size="icon" onClick={() => removeChallenge(index)}><Trash2 className="h-4 w-4" /></Button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <Button type="button" variant="outline" size="sm" className="mt-2" onClick={() => appendChallenge({ value: "" })}><Plus className="mr-2 h-4 w-4" /> Add Challenge</Button>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </div>
                 
                 <Button type="submit" disabled={isAnalyzing} className="w-full sm:w-auto">
@@ -290,24 +329,31 @@ export function PlatformAnalytics() {
                                 {lyraReport.performanceAnalysis.weaknesses.map((item, i) => <li key={i}>{item}</li>)}
                             </ul>
                         </div>
+                         <div>
+                            <h4 className="font-semibold text-blue-400">Trends</h4>
+                            <ul className="list-disc pl-5 text-muted-foreground text-sm space-y-1 mt-1">
+                                {lyraReport.performanceAnalysis.trends.map((item, i) => <li key={i}>{item}</li>)}
+                            </ul>
+                        </div>
                     </CardContent>
                 </Card>
                  <Card>
                     <CardHeader>
                         <CardTitle className="text-lg">Content Recommendations</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-2 text-sm">
-                        <p><strong className="text-primary-foreground">Post Types:</strong> {lyraReport.contentRecommendations.postTypes.join(', ')}</p>
-                        <p><strong className="text-primary-foreground">Hashtags:</strong> {lyraReport.contentRecommendations.hashtags.join(', ')}</p>
-                         <p><strong className="text-primary-foreground">Timings:</strong> {lyraReport.contentRecommendations.timingAdjustments.join(', ')}</p>
+                    <CardContent className="space-y-3 text-sm">
+                        <p><strong>Post Types:</strong> <span className="text-muted-foreground">{lyraReport.contentRecommendations.postTypes.join(', ')}</span></p>
+                        <p><strong>Hashtags:</strong> <span className="text-muted-foreground">{lyraReport.contentRecommendations.hashtags.join(', ')}</span></p>
+                         <p><strong>Timings:</strong> <span className="text-muted-foreground">{lyraReport.contentRecommendations.timingAdjustments.join(', ')}</span></p>
+                         <p><strong>Voice:</strong> <span className="text-muted-foreground">{lyraReport.contentRecommendations.voiceOptimizations.join(', ')}</span></p>
                     </CardContent>
                 </Card>
             </div>
 
             <div>
-                <h3 className="text-xl font-semibold mb-3">Tactical Adjustments</h3>
+                <h3 className="text-xl font-semibold mb-4">Tactical Adjustments</h3>
                 <Tabs defaultValue="immediate" className="w-full">
-                    <TabsList>
+                    <TabsList className="grid w-full grid-cols-3">
                         <TabsTrigger value="immediate">Immediate</TabsTrigger>
                         <TabsTrigger value="shortTerm">Short-Term</TabsTrigger>
                         <TabsTrigger value="longTerm">Long-Term</TabsTrigger>
@@ -322,6 +368,25 @@ export function PlatformAnalytics() {
                          {renderActionItems(lyraReport.tacticalAdjustments.longTerm)}
                     </TabsContent>
                 </Tabs>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+                <Card>
+                    <CardHeader><CardTitle>Strategic Evolution</CardTitle></CardHeader>
+                    <CardContent className="space-y-3 text-sm">
+                        <p><strong>Campaign Direction:</strong> <span className="text-muted-foreground">{lyraReport.strategicEvolution.campaignDirection}</span></p>
+                        <p><strong>Audience Targeting:</strong> <span className="text-muted-foreground">{lyraReport.strategicEvolution.audienceTargeting}</span></p>
+                        <p><strong>Content Pillars:</strong> <span className="text-muted-foreground">{lyraReport.strategicEvolution.contentPillars.join(', ')}</span></p>
+                    </CardContent>
+                </Card>
+                 <Card>
+                    <CardHeader><CardTitle>Success Metrics</CardTitle></CardHeader>
+                    <CardContent className="space-y-3 text-sm">
+                        <p><strong>KPIs to Track:</strong> <span className="text-muted-foreground">{lyraReport.successMetrics.kpis.join(', ')}</span></p>
+                        <p><strong>Tracking Methods:</strong> <span className="text-muted-foreground">{lyraReport.successMetrics.trackingMethods.join(', ')}</span></p>
+                        <p><strong>Review Frequency:</strong> <span className="text-muted-foreground">{lyraReport.successMetrics.reviewFrequency}</span></p>
+                    </CardContent>
+                </Card>
             </div>
             
           </div>
