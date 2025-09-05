@@ -1,3 +1,4 @@
+import { NodeWatermark } from "./node-watermark";
 import { Header } from "./header";
 import { Sidebar } from "./sidebar";
 
@@ -13,6 +14,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           </div>
         </main>
       </div>
+      <NodeWatermark />
     </div>
   )
 }
