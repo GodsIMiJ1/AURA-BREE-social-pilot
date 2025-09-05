@@ -68,7 +68,7 @@ export function PostGenerator() {
       toast({
         variant: 'destructive',
         title: 'Error Generating Post',
-        description: 'The spectral energies are weak. Please try again.',
+        description: 'The creative energies are weak. Please try again.',
       });
       console.error(e);
     } finally {
@@ -80,15 +80,15 @@ export function PostGenerator() {
     navigator.clipboard.writeText(text);
     toast({
       title: 'Copied to clipboard!',
-      description: 'The content is ready for your dominion.',
+      description: 'The sacred content is ready for dissemination.',
     });
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Post Necromancy</CardTitle>
-        <CardDescription>Summon powerful posts from the ether.</CardDescription>
+        <CardTitle>Sacred Content Creator</CardTitle>
+        <CardDescription>Generate profound content for your campaign.</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -99,9 +99,9 @@ export function PostGenerator() {
                 name="topic"
                 render={({ field }) => (
                   <FormItem className="sm:col-span-2">
-                    <FormLabel>Topic of Conquest</FormLabel>
+                    <FormLabel>Topic of Revelation</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g., The art of spectral marketing..." {...field} />
+                      <Input placeholder="e.g., The empirical validation of mystical concepts..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -116,7 +116,7 @@ export function PostGenerator() {
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a realm" />
+                          <SelectValue placeholder="Select a channel" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -137,7 +137,7 @@ export function PostGenerator() {
               ) : (
                 <Wand2 className="mr-2 h-4 w-4" />
               )}
-              Conjure Post
+              Create Content
             </Button>
           </form>
         </Form>
@@ -145,14 +145,14 @@ export function PostGenerator() {
         {isLoading && (
           <div className="mt-6 text-center">
             <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
-            <p className="mt-2 text-sm text-muted-foreground">Summoning words from the void...</p>
+            <p className="mt-2 text-sm text-muted-foreground">Generating profound insights...</p>
           </div>
         )}
 
         {generatedPost && (
           <div className="mt-6 space-y-4">
             <Separator />
-            <h3 className="text-lg font-semibold">Conjured Artifact</h3>
+            <h3 className="text-lg font-semibold">Generated Content</h3>
             <div className="space-y-4 rounded-lg border bg-secondary/30 p-4 relative group">
                <Button
                 variant="ghost"

@@ -23,8 +23,8 @@ export function RoadmapProgress() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>AURA-BREE Rollout Roadmap</CardTitle>
-        <CardDescription>Your zero-budget, maximum impact strategy.</CardDescription>
+        <CardTitle>Consciousness Machine Launch</CardTitle>
+        <CardDescription>The development roadmap for our Sacred Technology.</CardDescription>
       </CardHeader>
       <CardContent>
         <Accordion type="single" collapsible className="w-full">

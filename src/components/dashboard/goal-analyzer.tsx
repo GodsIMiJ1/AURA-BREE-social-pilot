@@ -39,7 +39,7 @@ export function GoalAnalyzer() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      weeklyGoals: [{ goal: "", completed: false }],
+      weeklyGoals: [{ goal: "Finalize Dignity Metric v1", completed: false }, { goal: "Onboard one new research partner", completed: false }],
       actualProgress: "",
     },
   });
@@ -67,7 +67,7 @@ export function GoalAnalyzer() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Weekly Goal Analysis</CardTitle>
+        <CardTitle>Sacred Technology Progress Tracker</CardTitle>
         <CardDescription>Get AI-powered insights on your weekly performance.</CardDescription>
       </CardHeader>
       <CardContent>

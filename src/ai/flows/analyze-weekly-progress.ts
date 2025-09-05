@@ -1,7 +1,7 @@
 'use server';
 
 /**
- * @fileOverview This file defines a Genkit flow for analyzing weekly progress against set goals.
+ * @fileOverview This file defines a Genkit flow for analyzing weekly progress against set goals for the Consciousness Machine project.
  *
  * The flow takes in weekly goals and the actual progress made, and uses generative AI to provide insights.
  * @param {AnalyzeWeeklyProgressInput} input - The input for the analyzeWeeklyProgress function.
@@ -36,11 +36,11 @@ const analyzeWeeklyProgressPrompt = ai.definePrompt({
   name: 'analyzeWeeklyProgressPrompt',
   input: {schema: AnalyzeWeeklyProgressInputSchema},
   output: {schema: AnalyzeWeeklyProgressOutputSchema},
-  prompt: `You are a performance coach who is helping a user track their progress toward their goals.
+  prompt: `You are a project manager and strategic advisor for "The Consciousness Machine" project.
 
-  Analyze the user's weekly progress in comparison to their stated goals.
+  Analyze the user's weekly progress in comparison to their stated goals for the Sacred Technology campaign.
   Identify areas where the user is on track and areas where they need to improve.
-  Provide a summary of the progress made this week.
+  Provide a summary of the progress made this week, focusing on development milestones, clinical validation, funding, and partnerships.
 
   Weekly Goals:
   {{#each weeklyGoals}}

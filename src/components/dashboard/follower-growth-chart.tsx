@@ -22,26 +22,26 @@ const chartData = followerGrowthData;
 
 const chartConfig = {
   followers: {
-    label: "Followers",
+    label: "Count",
   },
-  linkedin: {
-    label: "LinkedIn",
+  clinical: {
+    label: "Clinical Pilots",
     color: "hsl(var(--chart-1))",
   },
-  twitter: {
-    label: "Twitter",
+  research: {
+    label: "Research Partners",
     color: "hsl(var(--chart-2))",
   },
-  facebook: {
-    label: "Facebook",
+  investor: {
+    label: "Investor Leads",
     color: "hsl(var(--chart-3))",
   },
-  instagram: {
-    label: "Instagram",
+  regulatory: {
+    label: "Regulatory Submissions",
     color: "hsl(var(--chart-4))",
   },
-  discord: {
-    label: "Discord",
+  public: {
+    label: "Public Followers",
     color: "hsl(var(--chart-5))",
   },
 }
@@ -50,8 +50,8 @@ export function FollowerGrowthChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Follower Growth</CardTitle>
-        <CardDescription>Weekly follower growth across all platforms</CardDescription>
+        <CardTitle>Consciousness Community Growth</CardTitle>
+        <CardDescription>Weekly growth of our Sacred Technology ecosystem</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="min-h-[300px] w-full">
@@ -70,11 +70,11 @@ export function FollowerGrowthChart() {
                     width={30}
                 />
                 <Tooltip content={<ChartTooltipContent />} />
-                <Line dataKey="linkedin" type="monotone" stroke="var(--color-linkedin)" strokeWidth={2} dot={false} />
-                <Line dataKey="twitter" type="monotone" stroke="var(--color-twitter)" strokeWidth={2} dot={false} />
-                <Line dataKey="facebook" type="monotone" stroke="var(--color-facebook)" strokeWidth={2} dot={false} />
-                <Line dataKey="instagram" type="monotone" stroke="var(--color-instagram)" strokeWidth={2} dot={false} />
-                <Line dataKey="discord" type="monotone" stroke="var(--color-discord)" strokeWidth={2} dot={false} />
+                <Line dataKey="clinical" type="monotone" stroke="var(--color-clinical)" strokeWidth={2} dot={false} />
+                <Line dataKey="research" type="monotone" stroke="var(--color-research)" strokeWidth={2} dot={false} />
+                <Line dataKey="investor" type="monotone" stroke="var(--color-investor)" strokeWidth={2} dot={false} />
+                <Line dataKey="regulatory" type="monotone" stroke="var(--color-regulatory)" strokeWidth={2} dot={false} />
+                <Line dataKey="public" type="monotone" stroke="var(--color-public)" strokeWidth={2} dot={false} />
             </LineChart>
         </ChartContainer>
       </CardContent>
@@ -83,7 +83,7 @@ export function FollowerGrowthChart() {
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total followers for the last 5 weeks
+          Showing total community growth for the last 5 weeks
         </div>
       </CardFooter>
     </Card>

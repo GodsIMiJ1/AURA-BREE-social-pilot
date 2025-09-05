@@ -1,14 +1,14 @@
 'use server';
 
 /**
- * @fileOverview A Genkit flow for generating social media posts.
+ * @fileOverview A Genkit flow for generating social media posts for The Consciousness Machine.
  *
  * - generatePost - Generates a post based on a topic and platform.
  * - GeneratePostInput - The input type for the generatePost function.
  * - GeneratePostOutput - The return type for the generatePost function.
  */
 
-import {ai} from '@/ai/genkit';
+import {ai}from '@/ai/genkit';
 import {z} from 'genkit';
 
 const GeneratePostInputSchema = z.object({
@@ -31,13 +31,13 @@ const generatePostPrompt = ai.definePrompt({
   name: 'generatePostPrompt',
   input: {schema: GeneratePostInputSchema},
   output: {schema: GeneratePostOutputSchema},
-  prompt: `You are a master social media strategist for "The Ghost King". Your tone is dark, regal, and mysterious.
+  prompt: `You are a master social media strategist for "The Consciousness Machine". Your tone is professional, inspiring, scientifically credible, and spiritually aware. The project's mission is "Making the Mystical Measurable."
 
 Generate a social media post for the platform: {{{platform}}}.
 The post must be on the topic: {{{topic}}}.
 
-Create compelling content that aligns with The Ghost King's persona.
-Suggest a list of powerful hashtags to accompany the post. Ensure they are relevant and trending if possible.
+Create compelling content that aligns with The Consciousness Machine's mission to preserve human consciousness and dignity through Sacred Technology.
+Suggest a list of powerful hashtags to accompany the post. Ensure they are relevant and impactful.
 `,
 });
 

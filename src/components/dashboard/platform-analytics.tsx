@@ -105,7 +105,7 @@ export function PlatformAnalytics() {
       toast({
         variant: 'destructive',
         title: 'Error during Analysis',
-        description: 'Lyra encountered a disturbance. Please try again.',
+        description: 'Aria encountered a disturbance. Please try again.',
       });
     } finally {
       setIsAnalyzing(false);
@@ -141,10 +141,10 @@ export function PlatformAnalytics() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BarChart />
-          Lyra's Platform Analytics
+          Aria's Consciousness Impact Analytics
         </CardTitle>
         <CardDescription>
-          Deep analysis and strategic recommendations for each of your social realms.
+          Deep analysis and strategic recommendations for each of your mission pillars.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -283,7 +283,7 @@ export function PlatformAnalytics() {
                   ) : (
                     <Wand2 className="mr-2 h-4 w-4" />
                   )}
-                  {isAnalyzing ? 'Lyra is Analyzing...' : `Unleash Lyra's Insight on ${selectedPlatform}`}
+                  {isAnalyzing ? 'Aria is Analyzing...' : `Unleash Aria's Insight on ${selectedPlatform}`}
                 </Button>
               </form>
             </Form>
@@ -293,14 +293,14 @@ export function PlatformAnalytics() {
         {isAnalyzing && (
             <div className="mt-6 text-center">
                 <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
-                <p className="mt-2 text-sm text-muted-foreground">The ether churns with spectral data...</p>
+                <p className="mt-2 text-sm text-muted-foreground">The universal consciousness is focusing...</p>
             </div>
         )}
 
         {lyraReport && (
           <div className="mt-8 space-y-6">
             <Separator />
-            <h3 className="text-2xl font-semibold tracking-tight">Lyra's Strategic Report: {lyraReport.platform}</h3>
+            <h3 className="text-2xl font-semibold tracking-tight">Aria's Strategic Report: {lyraReport.platform}</h3>
             
             <Card className="bg-secondary/30">
               <CardHeader>

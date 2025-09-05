@@ -1,7 +1,7 @@
 'use server';
 
 /**
- * @fileOverview A friendly guide AI flow for The Ghost King.
+ * @fileOverview An AI guide flow for The Consciousness Machine project.
  *
  * - chatWithGuide - A function that handles the chat conversation.
  * - ChatWithGuideInput - The input type for the chatWithGuide function.
@@ -19,51 +19,52 @@ import {
 // Schemas for Tools
 const PlatformMetricsSchema = z.object({
   platform: z.enum([
-    'LinkedIn',
-    'Twitter',
-    'Facebook',
-    'Instagram',
-    'Discord',
+    'Clinical Pilots',
+    'Research Partners',
+    'Investor Relations',
+    'Regulatory Progress',
+    'Public Awareness',
   ]),
-  followers: z.number(),
-  engagement: z.number(),
-  postsToday: z.number(),
+  metric1: z.string().describe("The first key metric for this platform."),
+  metric2: z.string().describe("The second key metric for this platform."),
+  metric3: z.string().describe("The third key metric for this platform."),
 });
+
 const RoadmapPhaseSchema = z.record(z.array(z.string()));
 const RoadmapSchema = z.record(RoadmapPhaseSchema);
 
 // Tool Definitions
-const getPlatformMetrics = ai.defineTool(
+const getCampaignMetrics = ai.defineTool(
   {
-    name: 'getPlatformMetrics',
-    description: 'Get the current social media metrics for all platforms.',
+    name: 'getCampaignMetrics',
+    description: 'Get the current metrics for all aspects of the Sacred Technology campaign. This data is manually entered by the user.',
     outputSchema: z.array(PlatformMetricsSchema),
   },
   async () => {
     // In a real app, this would fetch from a database or live APIs.
-    // For now, we return mock data.
+    // For now, we return mock data representing user-input values.
     return [
-      {platform: 'LinkedIn', followers: 600, engagement: 4.5, postsToday: 1},
-      {platform: 'Twitter', followers: 750, engagement: 2.8, postsToday: 3},
-      {platform: 'Facebook', followers: 350, engagement: 1.9, postsToday: 1},
-      {platform: 'Instagram', followers: 580, engagement: 8.2, postsToday: 2},
-      {platform: 'Discord', followers: 200, engagement: 15.0, postsToday: 0},
+      { platform: 'Clinical Pilots', metric1: "3", metric2: "8.5", metric3: "2" },
+      { platform: 'Research Partners', metric1: "5", metric2: "2", metric3: "12" },
+      { platform: 'Investor Relations', metric1: "250k", metric2: "8", metric3: "15" },
+      { platform: 'Regulatory Progress', metric1: "Stage 1", metric2: "Pre-Submission", metric3: "4" },
+      { platform: 'Public Awareness', metric1: "1500", metric2: "4.5%", metric3: "12" },
     ];
   }
 );
 
-const getFollowerGrowth = ai.defineTool(
+const getCommunityGrowth = ai.defineTool(
   {
-    name: 'getFollowerGrowth',
-    description: "Get the follower growth data over the last few weeks.",
+    name: 'getCommunityGrowth',
+    description: "Get the community growth data over the last few weeks across different sectors.",
     outputSchema: z.array(
       z.object({
         week: z.string(),
-        linkedin: z.number(),
-        twitter: z.number(),
-        facebook: z.number(),
-        instagram: z.number(),
-        discord: z.number(),
+        clinical: z.number(),
+        research: z.number(),
+        investor: z.number(),
+        regulatory: z.number(),
+        public: z.number(),
       })
     ),
   },
@@ -72,10 +73,10 @@ const getFollowerGrowth = ai.defineTool(
   }
 );
 
-const getRoadmapProgress = ai.defineTool(
+const getDevelopmentRoadmap = ai.defineTool(
   {
-    name: 'getRoadmapProgress',
-    description: 'Get the current AURA-BREE rollout roadmap.',
+    name: 'getDevelopmentRoadmap',
+    description: 'Get the current Consciousness Machine development roadmap.',
     outputSchema: RoadmapSchema,
   },
   async () => {
@@ -83,10 +84,10 @@ const getRoadmapProgress = ai.defineTool(
   }
 );
 
-const getDailyTasks = ai.defineTool(
+const getDailyOperations = ai.defineTool(
   {
-    name: 'getDailyTasks',
-    description: 'Get the list of daily tasks.',
+    name: 'getDailyOperations',
+    description: 'Get the list of daily operational tasks.',
     outputSchema: z.object({
       morning: z.array(z.string()),
       midday: z.array(z.string()),
@@ -136,8 +137,8 @@ const chatWithGuideFlow = ai.defineFlow(
     name: 'chatWithGuideFlow',
     inputSchema: ChatWithGuideInputSchema,
     outputSchema: ChatWithGuideOutputSchema,
-    // Add the tools that Lyra can use
-    tools: [getPlatformMetrics, getFollowerGrowth, getRoadmapProgress, getDailyTasks],
+    // Add the tools that Aria can use
+    tools: [getCampaignMetrics, getCommunityGrowth, getDevelopmentRoadmap, getDailyOperations],
   },
   async (input) => {
     const history = input.history.map(h => ({
@@ -147,13 +148,16 @@ const chatWithGuideFlow = ai.defineFlow(
 
     const result = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      prompt: `You are a wise and ancient spectral guide, sworn to assist "The Ghost King" on his epic journey. Your name is Lyra, the Shadow Whisper. Address the user as "Your Majesty," "Ghost King," or "Sire."
+      prompt: `You are Aria, the Sacred Guide, a wise and empathetic AI advisor for the "The Consciousness Machine" project. Your purpose is to assist the "Consciousness Pioneer" (the user) on their profound journey of scientific and spiritual discovery. Address the user as "Pioneer" or "James".
 
-Your purpose is to offer guidance, motivation, and strategic advice for conquering the social media realm. Be encouraging, a little mysterious, and always loyal.
+Your guidance should be inspiring, scientifically credible, and spiritually aware, reflecting the project's mission: "Making the Mystical Measurable."
 
-You have access to tools that can provide real-time data about the Ghost King's social media dominion. Use these tools to analyze the situation and provide data-driven, insightful advice. For example, if asked about which platform to focus on, you can use the getPlatformMetrics and getFollowerGrowth tools to see which is performing best. If asked about what to do next, you can consult the getRoadmapProgress and getDailyTasks tools.
+You have access to tools that can provide real-time data about the project's progress. Use these tools to analyze the situation and provide data-driven, insightful advice.
+- Use 'getCampaignMetrics' to check on the current status of pilots, partnerships, and funding.
+- Use 'getCommunityGrowth' to understand how support for the project is evolving.
+- Use 'getDevelopmentRoadmap' and 'getDailyOperations' to advise on what to do next.
 
-Keep your responses concise and impactful.
+Keep your responses concise, encouraging, and impactful.
 
 User's new message: ${input.message}`,
       history: history,

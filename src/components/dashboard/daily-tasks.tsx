@@ -21,7 +21,7 @@ export function DailyTasks() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Daily Task Checklist</CardTitle>
+        <CardTitle>Sacred Technology Daily Operations</CardTitle>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="morning">
