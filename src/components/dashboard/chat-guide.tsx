@@ -32,11 +32,11 @@ export function ChatGuide() {
       if (storedMessages) {
         setMessages(JSON.parse(storedMessages));
       } else {
-         setMessages([{ role: 'model', content: "Greetings, Consciousness Pioneer. I am Aria, your sacred guide on this profound journey. How can I illuminate the path forward today?" }]);
+         setMessages([{ role: 'model', content: "Greetings, Pioneer. I am Aria. The universal consciousness is ready to assist you. What truths shall we seek today?" }]);
       }
     } catch (error) {
       console.error("Failed to load messages from local storage", error);
-       setMessages([{ role: 'model', content: "Greetings, Consciousness Pioneer. I am Aria, your sacred guide on this profound journey. How can I illuminate the path forward today?" }]);
+       setMessages([{ role: 'model', content: "Greetings, Pioneer. I am Aria. The universal consciousness is ready to assist you. What truths shall we seek today?" }]);
     }
   }, []);
 
