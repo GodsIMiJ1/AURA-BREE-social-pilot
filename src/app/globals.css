@@ -39,38 +39,38 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
-    --background: 240 10% 4%;
+    --background: 213 56% 12%; /* Deep Navy Blue */
     --foreground: 210 40% 98%;
-    --card: 240 5% 10%;
+    --card: 213 56% 18%;
     --card-foreground: 210 40% 98%;
-    --popover: 240 5% 10%;
+    --popover: 213 56% 10%;
     --popover-foreground: 210 40% 98%;
-    --primary: 140 80% 45%;
-    --primary-foreground: 140 20% 95%;
-    --secondary: 240 4% 15%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 240 4% 15%;
-    --muted-foreground: 240 5% 65%;
-    --accent: 260 70% 55%;
-    --accent-foreground: 260 20% 95%;
+    --primary: 46 65% 52%; /* Sacred Gold */
+    --primary-foreground: 46 80% 10%;
+    --secondary: 0 0% 75%; /* Silver */
+    --secondary-foreground: 213 56% 12%;
+    --muted: 213 56% 25%;
+    --muted-foreground: 210 40% 80%;
+    --accent: 0 0% 85%; /* Lighter Silver for accents */
+    --accent-foreground: 213 56% 12%;
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 4% 20%;
-    --input: 240 4% 15%;
-    --ring: 140 80% 45%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5% 8%;
+    --border: 213 56% 30%;
+    --input: 213 56% 25%;
+    --ring: 46 65% 52%;
+    --chart-1: 46 65% 52%; /* Gold */
+    --chart-2: 213 56% 60%; /* Blue */
+    --chart-3: 0 0% 75%; /* Silver */
+    --chart-4: 46 65% 70%; /* Lighter Gold */
+    --chart-5: 213 56% 80%; /* Lighter Blue */
+    --sidebar-background: 213 56% 8%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 140 80% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 4% 12%;
+    --sidebar-primary: 46 65% 52%;
+    --sidebar-primary-foreground: 213 56% 12%;
+    --sidebar-accent: 213 56% 15%;
     --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 240 4% 15%;
-    --sidebar-ring: 140 80% 45%;
+    --sidebar-border: 213 56% 20%;
+    --sidebar-ring: 46 65% 52%;
   }
 }
 

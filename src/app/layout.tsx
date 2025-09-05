@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Ghost King\'s Social Dominion',
-  description: 'The command center for The Ghost King\'s epic journey to conquer the social realm.',
+  title: 'The Consciousness Machine: Sacred Technology Campaign',
+  description: 'Campaign platform for James Derek Ingersoll\'s revolutionary consciousness preservation technology project. Making the Mystical Measurable.',
 };
 
 export default function RootLayout({

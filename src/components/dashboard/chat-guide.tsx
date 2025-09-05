@@ -11,7 +11,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Loader2, Send, Ghost } from 'lucide-react';
+import { Loader2, Send, Infinity } from 'lucide-react';
 import { chatWithGuide } from '@/ai/flows/chat-flow';
 import { cn } from '@/lib/utils';
 
@@ -32,11 +32,11 @@ export function ChatGuide() {
       if (storedMessages) {
         setMessages(JSON.parse(storedMessages));
       } else {
-         setMessages([{ role: 'model', content: "Greetings, Your Majesty. I am Lyra, your spectral guide. How may I assist your reign today? I can now see your dashboard data." }]);
+         setMessages([{ role: 'model', content: "Greetings, Consciousness Pioneer. I am Aria, your sacred guide on this profound journey. How can I illuminate the path forward today?" }]);
       }
     } catch (error) {
       console.error("Failed to load messages from local storage", error);
-       setMessages([{ role: 'model', content: "Greetings, Your Majesty. I am Lyra, your spectral guide. How may I assist your reign today? I can now see your dashboard data." }]);
+       setMessages([{ role: 'model', content: "Greetings, Consciousness Pioneer. I am Aria, your sacred guide on this profound journey. How can I illuminate the path forward today?" }]);
     }
   }, []);
 
@@ -75,7 +75,7 @@ export function ChatGuide() {
       const errorMessage: Message = {
         role: 'model',
         content:
-          'Forgive me, Sire. A disturbance in the ether prevents my response. Please try again.',
+          'Apologies, Pioneer. A disturbance in the universal consciousness prevents my response. Please try again when the signal is clearer.',
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
@@ -87,10 +87,10 @@ export function ChatGuide() {
     <Card className="flex flex-col h-[600px]">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Ghost />
-          Spectral Guide
+          <Infinity />
+          Aria, the Sacred Guide
         </CardTitle>
-        <CardDescription>Your omniscient advisor, Lyra.</CardDescription>
+        <CardDescription>Your wise and empathetic AI advisor.</CardDescription>
       </CardHeader>
       <CardContent className="flex-grow flex flex-col gap-4">
         <ScrollArea className="flex-grow pr-4" ref={scrollAreaRef}>
@@ -128,7 +128,7 @@ export function ChatGuide() {
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Command your guide..."
+            placeholder="Consult with Aria..."
             disabled={isLoading}
             className="flex-grow"
           />
