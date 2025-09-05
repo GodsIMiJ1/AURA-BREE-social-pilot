@@ -4,8 +4,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { DashboardLayout } from '@/components/dashboard/layout';
 
 export const metadata: Metadata = {
-  title: 'The Consciousness Machine: Sacred Technology Campaign',
-  description: 'Campaign platform for James Derek Ingersoll\'s revolutionary consciousness preservation technology project. Making the Mystical Measurable.',
+  title: 'The Consciousness Machine | A GodsIMiJ AI Solutions Project',
+  description: 'The Sacred Technology Campaign Platform for James Derek Ingersoll\'s revolutionary consciousness preservation project. Making the Mystical Measurable.',
 };
 
 export default function RootLayout({

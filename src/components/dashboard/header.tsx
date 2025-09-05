@@ -40,7 +40,7 @@ export function Header() {
         </Sheet>
         
         <div className="flex flex-1 items-center justify-end space-x-2">
-           <span className="text-sm text-muted-foreground hidden md:inline pl-2">Making the Mystical Measurable</span>
+           <span className="text-sm text-muted-foreground hidden md:inline pl-2">A GodsIMiJ AI Solutions Project</span>
         </div>
       </div>
     </header>
