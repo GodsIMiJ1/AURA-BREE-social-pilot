@@ -1,4 +1,4 @@
-import { Infinity, Link as LinkIcon } from "lucide-react";
+import { Home, Infinity, Link as LinkIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
@@ -14,14 +14,20 @@ export function Header() {
             </h1>
           </Link>
         </div>
-        <div className="flex flex-1 items-center justify-end space-x-4">
+        <div className="flex flex-1 items-center justify-end space-x-2">
+           <Button asChild variant="ghost">
+             <Link href="/">
+                <Home className="mr-2 h-4 w-4" />
+                Dashboard
+             </Link>
+            </Button>
            <Button asChild variant="ghost">
              <Link href="/embed-generator">
                 <LinkIcon className="mr-2 h-4 w-4" />
                 Webador Embeds
              </Link>
             </Button>
-           <span className="text-sm text-muted-foreground hidden md:inline">Making the Mystical Measurable</span>
+           <span className="text-sm text-muted-foreground hidden md:inline pl-2">Making the Mystical Measurable</span>
         </div>
       </div>
     </header>
