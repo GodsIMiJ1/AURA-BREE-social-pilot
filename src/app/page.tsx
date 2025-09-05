@@ -9,6 +9,7 @@ import { ChatGuide } from '@/components/dashboard/chat-guide';
 import { PostGenerator } from '@/components/dashboard/post-generator';
 import { FollowerGrowthChart } from '@/components/dashboard/follower-growth-chart';
 import { PlatformAnalytics } from '@/components/dashboard/platform-analytics';
+import { EmbedGenerator } from '@/components/dashboard/embed-generator';
 
 export default function DashboardPage() {
   return (
@@ -24,6 +25,7 @@ export default function DashboardPage() {
             <PlatformMetricsCard platform="Public Awareness" iconName="Users" />
           </div>
           <PlatformAnalytics />
+          <EmbedGenerator />
           <FollowerGrowthChart />
           <GoalAnalyzer />
           <PostGenerator />
