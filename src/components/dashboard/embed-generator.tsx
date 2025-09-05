@@ -108,10 +108,10 @@ export function EmbedGenerator() {
                       </FormControl>
                       <SelectContent>
                         <SelectItem value="consciousness_blog">Consciousness Research Blog</SelectItem>
-                        <SelectItem value="research_progress" disabled>Research Progress Tracker</SelectItem>
-                        <SelectItem value="clinical_analytics" disabled>Clinical Impact Dashboard</SelectItem>
-                        <SelectItem value="community_growth" disabled>Community Growth Chart</SelectItem>
-                        <SelectItem value="mystical_wisdom" disabled>Mystical Wisdom Feed</SelectItem>
+                        <SelectItem value="research_progress">Research Progress Tracker</SelectItem>
+                        <SelectItem value="clinical_analytics">Clinical Impact Dashboard</SelectItem>
+                        <SelectItem value="community_growth">Community Growth Chart</SelectItem>
+                        <SelectItem value="mystical_wisdom">Mystical Wisdom Feed</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
