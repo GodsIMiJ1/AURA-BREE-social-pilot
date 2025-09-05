@@ -1,41 +1,24 @@
-import { Header } from '@/components/dashboard/header';
-import { DailyTasks } from '@/components/dashboard/daily-tasks';
-import { PlatformMetricsCard } from '@/components/dashboard/platform-metrics';
-import { ContentCalendar } from '@/components/dashboard/content-calendar';
-import { RoadmapProgress } from '@/components/dashboard/roadmap-progress';
-import { GoalAnalyzer } from '@/components/dashboard/goal-analyzer';
-import { MotivationTools } from '@/components/dashboard/motivation-tools';
 import { ChatGuide } from '@/components/dashboard/chat-guide';
-import { PostGenerator } from '@/components/dashboard/post-generator';
-import { FollowerGrowthChart } from '@/components/dashboard/follower-growth-chart';
-import { PlatformAnalytics } from '@/components/dashboard/platform-analytics';
+import { MotivationTools } from '@/components/dashboard/motivation-tools';
+import { PlatformMetricsCard } from '@/components/dashboard/platform-metrics';
+
 
 export default function DashboardPage() {
   return (
-    <div className="flex min-h-screen w-full flex-col">
-      <Header />
-      <main className="container mx-auto grid flex-1 items-start gap-8 px-4 py-8 md:grid-cols-3 lg:grid-cols-4">
-        <div className="grid auto-rows-max items-start gap-8 md:col-span-2 lg:col-span-3">
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-            <PlatformMetricsCard platform="Clinical Pilots" iconName="HeartPulse" />
-            <PlatformMetricsCard platform="Research Partners" iconName="Library" />
-            <PlatformMetricsCard platform="Investor Relations" iconName="Landmark" />
-            <PlatformMetricsCard platform="Regulatory Progress" iconName="FileCheck" />
-            <PlatformMetricsCard platform="Public Awareness" iconName="Users" />
-          </div>
-          <PlatformAnalytics />
-          <FollowerGrowthChart />
-          <GoalAnalyzer />
-          <PostGenerator />
+    <div className="grid flex-1 items-start gap-8 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid auto-rows-max items-start gap-8 md:col-span-2 lg:col-span-3">
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          <PlatformMetricsCard platform="Clinical Pilots" iconName="HeartPulse" />
+          <PlatformMetricsCard platform="Research Partners" iconName="Library" />
+          <PlatformMetricsCard platform="Investor Relations" iconName="Landmark" />
+          <PlatformMetricsCard platform="Regulatory Progress" iconName="FileCheck" />
+          <PlatformMetricsCard platform="Public Awareness" iconName="Users" />
         </div>
-        <div className="grid auto-rows-max items-start gap-8 lg:sticky lg:top-20">
-          <ChatGuide />
-          <DailyTasks />
-          <RoadmapProgress />
-          <MotivationTools />
-          <ContentCalendar />
-        </div>
-      </main>
+        <MotivationTools />
+      </div>
+      <div className="grid auto-rows-max items-start gap-8 lg:sticky lg:top-24">
+        <ChatGuide />
+      </div>
     </div>
   );
 }
